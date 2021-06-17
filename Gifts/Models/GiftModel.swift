@@ -8,6 +8,12 @@
 import Foundation
 
 final class GiftModel: Equatable {
+	
+	let id: Int
+	let name: String
+	let amount: Int
+	var isSelected: Bool
+	
 	static func == (lhs: GiftModel, rhs: GiftModel) -> Bool {
 		return lhs.id == rhs.id
 	}
@@ -25,9 +31,4 @@ final class GiftModel: Equatable {
 		self.amount = model.amount
 		self.isSelected = false
 	}
-	
-	let id: Int
-	let name: String
-	let amount: Int
-	var isSelected: Bool
 }
