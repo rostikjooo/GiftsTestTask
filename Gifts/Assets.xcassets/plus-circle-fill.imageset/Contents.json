@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "emblemicons_pdf_plus-circle-fill.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
