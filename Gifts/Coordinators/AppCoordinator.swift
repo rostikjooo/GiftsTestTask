@@ -23,9 +23,6 @@ final class AppCoordinator: Coordinator {
 	}
 	
 	func start() {
-		if DatabaseService.isDatabaseEmpty() {
-			DatabaseService.addMockData()
-		}
 		let navigationController = UINavigationController()
 		window.rootViewController = navigationController
 		let giftsCoordinator = GiftsCoordinator(navigation: navigationController)

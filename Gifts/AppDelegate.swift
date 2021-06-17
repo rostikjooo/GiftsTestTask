@@ -14,6 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var appCoordinator: AppCoordinator?
 	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+		if DatabaseService.isDatabaseEmpty() {
+			DatabaseService.addMockData()
+		}
 		let window = UIWindow()
 		self.window = window
 		appCoordinator = .init(window: window)

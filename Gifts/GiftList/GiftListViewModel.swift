@@ -21,9 +21,7 @@ final class GiftListViewModel {
 	}
 	
 	var reloadTable: Observable<Void> {
-		return model.syncData.map { _ in
-			return Void()
-		}
+		return model.syncData
 	}
 	
 	var totalPrice: Observable<Int> {
@@ -40,10 +38,8 @@ final class GiftListViewModel {
 		}
 	}
 	
-	var addNewGift: AnyObserver<Void> {
-		model.addNewGiftItem.mapObserver { _ in
-			return ()
-		}
+	var addNewGift: PublishSubject<Void> {
+		model.addNewGiftItem
 	}
 	
 	init(model: GiftListModel) {

@@ -46,19 +46,39 @@ final class GiftListModel {
 			self.totalPrice.accept(self.calculateAmount())
 		}).disposed(by: disposeBag)
 		
-		
 		addNewGiftItem.subscribe(onNext: { [weak self] _ in
 			self?.coordinator.startGiftCreation(completion: { [weak self] newGift in
 				self?.addNewElement(item: newGift)
 			})
 		}).disposed(by: disposeBag)
-		
-		
 	}
 	
 	private func calculateAmount() -> Int {
 		let selects = self.data.filter { $0.isSelected }
 		return selects.reduce(0, { $0 + $1.amount })
+	}
+	
+	fileprivate func calculateOverdraw(
+		_ amount: Int,
+		_ selects: [GiftModel],
+		_ lastSelectedModel: GiftModel,
+		_ self: GiftListModel
+	) {
+		var sum = amount
+		var candidates = selects.filter { model in
+			lastSelectedModel.id != model.id
+		}
+		while sum > 100 {
+			let gap = sum - 100
+			guard let candidate = (candidates.min { lhs, rhs in
+				abs(lhs.amount - gap) < abs(rhs.amount - gap)
+			}) else { break }
+			self.cellModels.first { model in
+				model.item.id == candidate.id
+			}?.checkSelected.onNext(false)
+			sum -= candidate.amount
+			_ = candidates.firstIndex(of: candidate).map { candidates.remove(at: $0) }
+		}
 	}
 	
 	private func rebindDataSelection() {
@@ -72,23 +92,8 @@ final class GiftListModel {
 				self.totalPrice.accept(amount)
 			} else {
 				self.overflowEvent.onNext(())
-				var sum = amount
-				var candidates = selects.filter { model in
-					lastSelectedModel.id != model.id
-				}
-				while sum > 100 {
-					let gap = sum - 100
-					guard let candidate = (candidates.min { lhs, rhs in
-						abs(lhs.amount - gap) < abs(rhs.amount - gap)
-					}) else { break }
-					self.cellModels.first { model in
-						model.item.id == candidate.id
-					}?.checkSelected.onNext(false)
-					sum -= candidate.amount
-					_ = candidates.firstIndex(of: candidate).map { candidates.remove(at: $0) }
-				}
+				self.calculateOverdraw(amount, selects, lastSelectedModel, self)
 			}
-			
 		}).disposed(by: selectableDisposeBag)
 	}
 	

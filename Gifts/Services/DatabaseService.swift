@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-final class DatabaseService {
+struct DatabaseService {
 	
 	static func fetchAllGifts() -> [GiftModel] {
 		let realm = try! Realm()
@@ -31,7 +31,7 @@ final class DatabaseService {
 		let realm = try! Realm()
 		let objects = realm.objects(GiftDBObject.self)
 		let maxId = objects.max(ofProperty: "id") as Int?
-		let newItem = GiftModel(id: (maxId  ?? -1) + 1, name: item.name, amount: item.amount)
+		let newItem = GiftModel(id: (maxId ?? -1) + 1, name: item.name, amount: item.amount)
 		try! realm.write({
 			realm.add(GiftDBObject(model: newItem))
 		})

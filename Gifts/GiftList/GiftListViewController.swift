@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 
-class GiftListViewController: UIViewController {
+final class GiftListViewController: UIViewController {
 	
 	private let cellReuseId = "giftCell"
 	private let disposeBag = DisposeBag()
@@ -31,7 +31,6 @@ class GiftListViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupSubviews()
-		totalView.setTotalPrice(0)
 		setupBindings()
 	}
 	
@@ -77,7 +76,6 @@ class GiftListViewController: UIViewController {
 		viewModel.overflow.subscribe { [weak self] _ in
 			self?.totalView.signalOverflow()
 		}.disposed(by: disposeBag)
-		
 	}
 	
 	@objc func plusTapped() {

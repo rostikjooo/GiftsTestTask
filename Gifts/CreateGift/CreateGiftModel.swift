@@ -21,7 +21,6 @@ final class CreateGiftModel {
 	
 	private var disposeBag = DisposeBag()
 	
-	
 	init(completion: @escaping (GiftModel?) -> ()) {
 		self.completion = completion
 		setupBindings()
@@ -37,7 +36,6 @@ final class CreateGiftModel {
 				self?.completion(item)
 			}).disposed(by: disposeBag)
 
-		
 		close.subscribe { [weak self] _ in
 			self?.completion(nil)
 		}.disposed(by: disposeBag)

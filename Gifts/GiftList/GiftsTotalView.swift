@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GiftsTotalView: UIView {
+final class GiftsTotalView: UIView {
 	private var label: UILabel
 	
 	override init(frame: CGRect) {
@@ -23,6 +23,7 @@ class GiftsTotalView: UIView {
 			make.top.left.right.equalToSuperview().inset(UIEdgeInsets(top: 12, left: 32, bottom: 0, right: 32))
 			make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(12)
 		}
+		setTotalPrice(0)
 	}
 	
 	func setTotalPrice(_ value: Int) {
