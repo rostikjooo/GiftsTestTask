@@ -19,9 +19,7 @@ struct DatabaseService {
 	
 	static func removeGift(item: GiftModel) {
 		let realm = try! Realm()
-		guard let objectToDelete = realm.object(ofType: GiftDBObject.self, forPrimaryKey: item.id) else {
-			return
-		}
+		guard let objectToDelete = realm.object(ofType: GiftDBObject.self, forPrimaryKey: item.id) else { return }
 		try! realm.write {
 			realm.delete(objectToDelete)
 		}
@@ -40,11 +38,11 @@ struct DatabaseService {
 	
 	static func isDatabaseEmpty() -> Bool {
 		let realm = try! Realm()
-		return realm.objects(GiftDBObject.self).count == 0
+		return realm.objects(GiftDBObject.self).isEmpty
 	}
 	
 	static func addMockData() {
-		let entries = Self.mockData.map { GiftDBObject(model:$0) }
+		let entries = Self.mockData.map { GiftDBObject(model: $0) }
 		let realm = try! Realm()
 		try! realm.write {
 			realm.add(entries)

@@ -12,6 +12,7 @@ import RxSwift
 final class GiftListViewModel {
 	
 	private let model: GiftListModel
+  
 	let title = "Gifts"
 	
 	var cellViewModels: [GiftTableViewCellViewModel] {
@@ -39,7 +40,7 @@ final class GiftListViewModel {
 	}
 	
 	var addNewGift: PublishSubject<Void> {
-		model.addNewGiftItem
+		return model.addNewGiftItem
 	}
 	
 	init(model: GiftListModel) {

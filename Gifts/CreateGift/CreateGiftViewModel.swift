@@ -20,25 +20,25 @@ final class CreateGiftViewModel {
 	let closeButtonTitle = "Close"
 	
 	var name: PublishSubject<String> {
-		model.name
+		return model.name
 	}
 	
 	var amount: AnyObserver<String> {
-		model.amount.mapObserver {
+		return model.amount.mapObserver {
 			Int($0) ?? 0
 		}
 	}
 	
 	var isValid: PublishSubject<Bool> {
-		model.isValid
+		return model.isValid
 	}
 	
 	var create: PublishSubject<Void> {
-		model.create
+		return model.create
 	}
 	
 	var close: PublishSubject<Void> {
-		model.close
+		return model.close
 	}
 	
 	init(model: CreateGiftModel) {

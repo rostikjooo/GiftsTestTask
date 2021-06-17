@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class GiftTableViewCellViewModel {
+  
 	private let model: GiftTableViewCellModel
 	
 	var title: String {

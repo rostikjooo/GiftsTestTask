@@ -12,7 +12,6 @@ final class GiftsCoordinator: Coordinator {
 	
 	private let navigation: UINavigationController
 	private(set) var childCoordinators: [Coordinator] = []
-	private var newGiftDisposeBag = DisposeBag()
 	
 	init(navigation: UINavigationController) {
 		self.navigation = navigation
@@ -27,7 +26,6 @@ final class GiftsCoordinator: Coordinator {
 	}
 	
 	func startGiftCreation(completion: @escaping (GiftModel) -> Void) {
-		newGiftDisposeBag = .init()
 		let navigationController = UINavigationController()
 		let model: CreateGiftModel = CreateGiftModel { model in
 			navigationController.dismiss(animated: true, completion: nil)
@@ -36,6 +34,7 @@ final class GiftsCoordinator: Coordinator {
 		let viewModel: CreateGiftViewModel = CreateGiftViewModel(model: model)
 		let createGiftViewController = CreateGiftViewController(viewModel: viewModel)
 		navigationController.setViewControllers([createGiftViewController], animated: true)
-		self.navigation.present(navigationController, animated: true, completion: nil)
+		
+		navigation.present(navigationController, animated: true, completion: nil)
 	}
 }

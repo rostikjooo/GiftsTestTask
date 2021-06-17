@@ -11,16 +11,16 @@ import RxCocoa
 
 final class GiftListModel {
 	
-	var cellModels: [GiftTableViewCellModel] = []
 	let syncData: PublishSubject<Void> = .init()
 	let totalPrice: BehaviorRelay<Int> = .init(value: 0)
 	let overflowEvent: PublishSubject<Void> = .init()
 	let itemDeleted: PublishSubject<Int> = .init()
 	let addNewGiftItem: PublishSubject<Void> = .init()
+	var cellModels: [GiftTableViewCellModel] = []
 	
 	private weak var coordinator: GiftsCoordinator!
-	private var data: [GiftModel] = []
 	private let disposeBag = DisposeBag()
+	private var data: [GiftModel] = []
 	private var selectableDisposeBag = DisposeBag()
 	
 	init(coordinator: GiftsCoordinator) {
@@ -58,7 +58,7 @@ final class GiftListModel {
 		return selects.reduce(0, { $0 + $1.amount })
 	}
 	
-	fileprivate func calculateOverdraw(
+	private func calculateOverdraw(
 		_ amount: Int,
 		_ selects: [GiftModel],
 		_ lastSelectedModel: GiftModel,

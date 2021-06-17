@@ -25,14 +25,14 @@ final class CreateGiftViewController: UIViewController {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		self.view.backgroundColor = .white
 		self.title = viewModel.title
 		setupSubviews()
 		setupBindings()
-    }
+	}
 	
 	func setupSubviews() {
 		view.addSubview(nameTextField)
@@ -52,27 +52,37 @@ final class CreateGiftViewController: UIViewController {
 		priceTextField.placeholder = viewModel.giftAmountPlaceholder
 		priceTextField.keyboardType = .numberPad
 		
-		doneBarButtonItem = UIBarButtonItem(title: viewModel.createButtonTitle, style: .plain, target: self, action: #selector(doneAct))
+		doneBarButtonItem = UIBarButtonItem(
+			title: viewModel.createButtonTitle,
+			style: .plain,
+			target: self,
+			action: #selector(doneAct)
+		)
 		doneBarButtonItem.isEnabled = false
 		
-		cancellBarButtonItem = UIBarButtonItem(title: viewModel.closeButtonTitle, style: .plain, target: self, action: #selector(cancellAct))
+		cancellBarButtonItem = UIBarButtonItem(
+			title: viewModel.closeButtonTitle,
+			style: .plain,
+			target: self,
+			action: #selector(cancellAct)
+		)
 		navigationItem.leftBarButtonItem = cancellBarButtonItem
 		navigationItem.rightBarButtonItem = doneBarButtonItem
 	}
 	
-	func setupBindings() {
+	private func setupBindings() {
 		nameTextField.rx.text.distinctUntilChanged().compactMap { $0 }.bind(to: viewModel.name).disposed(by: disposeBag)
 		priceTextField.rx.text.distinctUntilChanged().compactMap { $0 }.bind(to: viewModel.amount).disposed(by: disposeBag)
 		viewModel.isValid.subscribe(onNext: { [weak self] isValid in
 			self?.doneBarButtonItem.isEnabled = isValid
 		}).disposed(by: disposeBag)
 	}
-
+	
 	@objc private func doneAct() {
 		viewModel.create.onNext(())
 	}
 	
 	@objc private func cancellAct() {
-		dismiss(animated: true, completion: nil)
+		viewModel.close.onNext(())
 	}
 }
