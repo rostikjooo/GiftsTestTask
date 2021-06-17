@@ -13,14 +13,13 @@ final class CreateGiftModel {
 	
 	let completion: (GiftModel?) -> ()
 	
-	var name = PublishSubject<String>()
-	var amount = PublishSubject<Int>()
-	var create = PublishSubject<Void>()
-	var close = PublishSubject<Void>()
-	var isValid = PublishSubject<Bool>()
+	let name = PublishSubject<String>()
+	let amount = PublishSubject<Int>()
+	let create = PublishSubject<Void>()
+	let close = PublishSubject<Void>()
+	let isValid = PublishSubject<Bool>()
 	
-	private var disposeBag = DisposeBag()
-	
+	private let disposeBag = DisposeBag()
 	
 	init(completion: @escaping (GiftModel?) -> ()) {
 		self.completion = completion
@@ -36,7 +35,6 @@ final class CreateGiftModel {
 			.subscribe(onNext: { [weak self] item in
 				self?.completion(item)
 			}).disposed(by: disposeBag)
-
 		
 		close.subscribe { [weak self] _ in
 			self?.completion(nil)

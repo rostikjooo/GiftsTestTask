@@ -17,19 +17,12 @@ final class GiftTableViewCell: UITableViewCell {
 	}
 	private var disposeBag = DisposeBag()
 	
-	private func makeSelected(_ selected: Bool) {
-		textLabel?.font = UIFont.systemFont(ofSize: 17, weight: selected ? .bold : .regular)
-		accessoryType = selected ? .checkmark : .none
-	}
-	
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-		
 		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(switchSelection))
 		addGestureRecognizer(tapGesture)
 		textLabel?.numberOfLines = 0
 		textLabel?.lineBreakMode = .byWordWrapping
-		
 	}
 	
 	required init?(coder: NSCoder) {
@@ -45,6 +38,11 @@ final class GiftTableViewCell: UITableViewCell {
 		let newIsSelected: Bool = !(viewModel?.currentSelectionValue ?? false)
 		makeSelected(newIsSelected)
 		viewModel?.isSelected.onNext(newIsSelected)
+	}
+	
+	private func makeSelected(_ selected: Bool) {
+		textLabel?.font = UIFont.systemFont(ofSize: 17, weight: selected ? .bold : .regular)
+		accessoryType = selected ? .checkmark : .none
 	}
 	
 	private func setup() {

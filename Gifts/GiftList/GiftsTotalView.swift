@@ -7,11 +7,11 @@
 
 import UIKit
 
-class GiftsTotalView: UIView {
-	private var label: UILabel
+final class GiftsTotalView: UIView {
+	
+	private let label: UILabel = UILabel()
 	
 	override init(frame: CGRect) {
-		label = UILabel()
 		super.init(frame: frame)
 		backgroundColor = .gray
 		label.font = UIFont.systemFont(ofSize: 21, weight: .medium)
@@ -23,6 +23,11 @@ class GiftsTotalView: UIView {
 			make.top.left.right.equalToSuperview().inset(UIEdgeInsets(top: 12, left: 32, bottom: 0, right: 32))
 			make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(12)
 		}
+		setTotalPrice(0)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
 	}
 	
 	func setTotalPrice(_ value: Int) {
@@ -40,9 +45,5 @@ class GiftsTotalView: UIView {
 		animation.fromValue = CGPoint(x: midX - 10, y: midY)
 		animation.toValue = CGPoint(x: midX + 10, y: midY)
 		label.layer.add(animation, forKey: "position")
-	}
-	
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
 	}
 }

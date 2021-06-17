@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 
-class GiftListViewController: UIViewController {
+final class GiftListViewController: UIViewController {
 	
 	private let cellReuseId = "giftCell"
 	private let disposeBag = DisposeBag()
@@ -31,13 +31,12 @@ class GiftListViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupSubviews()
-		totalView.setTotalPrice(0)
 		setupBindings()
 	}
 	
-	func setupSubviews() {
+	private func setupSubviews() {
 		tableView = UITableView()
-		self.view.addSubview(tableView)
+		view.addSubview(tableView)
 		tableView.snp.makeConstraints { make in
 			make.left.right.top.equalToSuperview()
 		}
@@ -47,7 +46,7 @@ class GiftListViewController: UIViewController {
 		tableView.allowsMultipleSelection = true
 		tableView.separatorColor = .clear
 		
-		self.title = viewModel.title
+		title = viewModel.title
 		plusBarButton = UIBarButtonItem(
 			image: UIImage.init(named: "plus-circle-fill"),
 			style: .plain,
@@ -55,7 +54,7 @@ class GiftListViewController: UIViewController {
 			action: #selector(plusTapped)
 		)
 		plusBarButton.tintColor = UIColor.darkText
-		self.navigationItem.rightBarButtonItem = plusBarButton
+		navigationItem.rightBarButtonItem = plusBarButton
 		
 		totalView = .init()
 		view.addSubview(totalView)
@@ -65,7 +64,7 @@ class GiftListViewController: UIViewController {
 		}
 	}
 	
-	func setupBindings() {
+	private func setupBindings() {
 		viewModel.reloadTable.subscribe { [weak self] _ in
 			self?.tableView.reloadData()
 		}.disposed(by: disposeBag)
@@ -77,15 +76,15 @@ class GiftListViewController: UIViewController {
 		viewModel.overflow.subscribe { [weak self] _ in
 			self?.totalView.signalOverflow()
 		}.disposed(by: disposeBag)
-		
 	}
 	
-	@objc func plusTapped() {
+	@objc private func plusTapped() {
 		viewModel.addNewGift.onNext(())
 	}
 }
 
 extension GiftListViewController: UITableViewDelegate, UITableViewDataSource {
+	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return viewModel.cellViewModels.count
 	}

@@ -20,11 +20,10 @@ final class GiftTableViewCellModel {
 	}
 	
 	private func setup() {
-		checkSelected.observe(on:MainScheduler.asyncInstance)
-			.subscribe(onNext: { [weak self] isSelected in
-				guard let self = self else { return }
-				self.item.isSelected = isSelected
-				self.modelChange.onNext(self.item)
-			}).disposed(by: disposeBag)
+		checkSelected.observe(on:MainScheduler.asyncInstance).subscribe(onNext: { [weak self] isSelected in
+			guard let self = self else { return }
+			self.item.isSelected = isSelected
+			self.modelChange.onNext(self.item)
+		}).disposed(by: disposeBag)
 	}
 }
