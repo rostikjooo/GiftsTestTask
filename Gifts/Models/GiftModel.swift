@@ -14,10 +14,6 @@ final class GiftModel: Equatable {
 	let amount: Int
 	var isSelected: Bool
 	
-	static func == (lhs: GiftModel, rhs: GiftModel) -> Bool {
-		return lhs.id == rhs.id
-	}
-	
 	init(id: Int, name: String, amount: Int, isSelected: Bool = false) {
 		self.id = id
 		self.name = name
@@ -30,5 +26,9 @@ final class GiftModel: Equatable {
 		self.name = model.name
 		self.amount = model.amount
 		self.isSelected = false
+	}
+	
+	static func == (lhs: GiftModel, rhs: GiftModel) -> Bool {
+		return lhs.id == rhs.id
 	}
 }
